@@ -8,4 +8,4 @@ while True:
     voltage = potentiometer.read_u16() * conversion_factor
     print(voltage)
     utime.sleep(2)
-    utime.sleep(5)
+    # utime.sleep(5)
