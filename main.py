@@ -5,7 +5,7 @@ sensor_temp = machine.ADC(4)
 conversion_factor = 3.3 / (65535)
 
 file = open("temp.txt", "w")
-file.close()
+
 
 while True:
     number = 1
