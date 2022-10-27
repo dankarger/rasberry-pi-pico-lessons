@@ -1,13 +1,19 @@
 import machine
 import utime
 
-potentiometer = machine.ADC(26)
-led = machine.PWM(machine.Pin(15))
-led.freq(1000)
+sensor_temp = machine.ADC(4)
+conversion_factor = 3.3 / (65535)
+
+file = open("temp.txt", "w")
+string = open("number.txt")
+variable = string.read()
+string.close()
 
 while True:
-    print(potentiometer.read_u16())
-    if potentiometer.read_u16() > 770:
-        led.duty_u16(potentiometer.read_u16())
-    else:
-        led.duty_u16(0)
+    number = 1
+    reading = sensor_temp.read_u16() * conversion_factor
+    temperature = 27 - (reading - 0.706)/0.001721
+    file.write(variable + str(temperature) + "\n")
+    number += 1
+    file.flush()
+    utime.sleep(1)
