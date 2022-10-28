@@ -79,7 +79,7 @@ class RGB1602:
         self.setReg(REG_BLUE, b)
 
     def setCursor(self, col, row):
-        if row == 0:
+        if row==0:
             col |= 0x00
         else:
             col |= 0x80

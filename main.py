@@ -18,6 +18,7 @@ rgb7 = (80, 80, 145)  # 深蓝色
 rgb8 = (255, 0, 0)  # 红色
 rgb9 = (0, 255, 0)  # 青色
 
+
 # set the cursor to column 0, line 1
 
 
@@ -36,6 +37,7 @@ def reset_lcd(seconds):
 
 while True:
     lcd.setCursor(0, 0)
+    lcd.setColorWhite()
     write_text('Hello World!')
     reset_lcd(1)
     lcd.setRGB(rgb1[0], rgb1[1], rgb1[2])
@@ -43,7 +45,7 @@ while True:
     write_text("Nice to meet You")
     lcd.setRGB(rgb3[0], rgb3[1], rgb3[2])
     # reset_lcd(3)
-    lcd.setCursor(0,1)
+    lcd.setCursor(0, 1)
     write_text(':)')
     lcd.setRGB(rgb4[0], rgb4[1], rgb4[2])
     time.sleep(2)
@@ -51,7 +53,6 @@ while True:
     lcd.setRGB(rgb9[0], rgb9[1], rgb9[2])
     reset_lcd(3)
     time.sleep(2)
-
 
 #
 #
@@ -87,4 +88,3 @@ while True:
 #
 #     # lcd.printout("Hello,World!")
 #     time.sleep(0.3)
-
