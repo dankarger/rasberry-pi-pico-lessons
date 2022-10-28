@@ -24,7 +24,7 @@ lcd.setCursor(0, 0)
 # print the number of seconds since reset:
 
 # print the number of seconds since reset:
-# lcd.printout("Waveshare")
+lcd.printout("Waveshare")
 
 lcd.setCursor(0, 1)
 
