@@ -79,11 +79,13 @@ class RGB1602:
         self.setReg(REG_BLUE, b)
 
     def setCursor(self, col, row):
-        if (row==0):
-            col |= 0x80
+        if row == 0:
+            col |= 0x00
         else:
-            col |= 0xc0;
+            col |= 0x80
+
         self.command(col)
+        # self.command(row)
 
     def clear(self):
         self.command(LCD_CLEARDISPLAY)

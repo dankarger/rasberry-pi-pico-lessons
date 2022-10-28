@@ -35,59 +35,56 @@ def reset_lcd(seconds):
 
 
 while True:
-    write_text('Hello World')
-    reset_lcd(0.3)
+    lcd.setCursor(0, 0)
+    write_text('Hello World!')
+    reset_lcd(1)
+    lcd.setRGB(rgb1[0], rgb1[1], rgb1[2])
+    lcd.setCursor(0, 0)
     write_text("Nice to meet You")
-    reset_lcd(0.3)
-    # lcd.setCursor(0, 0)
-    # print the number of seconds since reset:
+    lcd.setRGB(rgb3[0], rgb3[1], rgb3[2])
+    # reset_lcd(3)
+    lcd.setCursor(0,1)
+    write_text(':)')
+    lcd.setRGB(rgb4[0], rgb4[1], rgb4[2])
+    time.sleep(2)
+    write_text(' Bye Bye!')
+    lcd.setRGB(rgb9[0], rgb9[1], rgb9[2])
+    reset_lcd(3)
+    time.sleep(2)
 
-    # print the number of seconds since reset:
-    # lcd.printout("Waveshare")
-    # lcd.setCursor(0, 1)
-    #
-    # lcd.printout("Hello,World!")
-    #
-    # lcd.setRGB(rgb1[0], rgb1[1], rgb1[2])
-    # time.sleep(2)
-    #
-    # lcd.setRGB(rgb2[0], rgb2[1], rgb2[2])
-    # time.sleep(0.2)
-    # lcd.printout("H")
-    # time.sleep(0.1)
-    # lcd.printout("e")
-    # time.sleep(0.2)
-    # lcd.printout("l")
-    # time.sleep(0.2)
-    # lcd.printout("l")
-    # time.sleep(0.2)
-    # lcd.printout("o")
-    # time.sleep(0.2)
-    # lcd.printout(" ")
-    # time.sleep(0.2)
-    # lcd.printout("W")
-    # time.sleep(0.3)
-    # lcd.printout("o")
-    # time.sleep(0.3)
-    # lcd.printout("r")
-    # time.sleep(0.3)
-    # lcd.printout("l")
-    # time.sleep(0.3)
-    # lcd.printout("d")
-    # time.sleep(0.3)
-    # lcd.setRGB(rgb3[0], rgb3[1], rgb3[2])
-    # time.sleep(2)
-    # lcd.setRGB(rgb4[0], rgb4[1], rgb4[2])
-    # time.sleep(5)
-    # lcd.setRGB(rgb5[0], rgb5[1], rgb5[2])
-    # time.sleep(5)
-    # lcd.setRGB(rgb6[0], rgb6[1], rgb6[2])
-    # time.sleep(5)
-    # lcd.setRGB(rgb7[0], rgb7[1], rgb7[2])
-    # time.sleep(5)
-    # lcd.setRGB(rgb8[0], rgb8[1], rgb8[2])
-    # time.sleep(5)
-    # lcd.setRGB(rgb9[0], rgb9[1], rgb9[2])
-    # time.sleep(5)
 
+#
+#
+#
+# import RGB1602
+# import time
+# import math
+# import write_text
+#
+# colorR = 64
+# colorG = 128
+# colorB = 64
+#
+# lcd = RGB1602.RGB1602(16, 2)
+#
+# t = 0
+#
+# while True:
+#     r = int((abs(math.sin(3.14 * t / 180))) * 255);
+#     g = int((abs(math.sin(3.14 * (t + 60) / 180))) * 255);
+#     b = int((abs(math.sin(3.14 * (t + 120) / 180))) * 255);
+#     t = t + 3;
+#
+#     lcd.setRGB(r, g, b);
+#     # set the cursor to column 0, line 1
+#     lcd.setCursor(0, 0)
+#     # print the number of seconds since reset:
+#
+#     # print the number of seconds since reset:
+#     lcd.printout("1Waveshare")
+#     # write_text.write_text('Hello World')
+#     lcd.setCursor(0, 1)
+#
+#     # lcd.printout("Hello,World!")
+#     time.sleep(0.3)
 
