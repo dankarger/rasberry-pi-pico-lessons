@@ -26,6 +26,7 @@ rgb9 = (0, 255, 0)  # 青色
 # space_invader = [0x4,0xe,0x1f,0x15,0x1f,0xa,0x1b,0x0]
 # lcd.display(0, space_invader)
 
+
 while True:
     lcd.setCursor(0, 0)
     lcd.setColorWhite()
