@@ -25,6 +25,17 @@ rgb9 = (0, 255, 0)  # 青色
 
 # space_invader = [0x4,0xe,0x1f,0x15,0x1f,0xa,0x1b,0x0]
 # lcd.display(0, space_invader)
+tempTable = {
+    10: 'cold',
+    20: 'chill',
+    30: 'hot'
+}
+
+
+def define_weather(temp):
+    for number in tempTable:
+        if temp <= number:
+            return tempTable[number]
 
 
 while True:
@@ -39,14 +50,19 @@ while True:
     # print(temperature)
     write_text.write_text(f"The Temp is:")
     lcd.setCursor(0, 1)
-    write_text.write_text(f"- {str(temperature)[0:4]} C")
+    write_text.write_text(f"- {str(temperature)[0:4]} C -")
     # lcd.setRGB(rgb3[0], rgb3[1], rgb3[2])
-    # reset_lcd(3)
+    write_text.reset_lcd(3)
     lcd.setCursor(0, 0)
-    write_text.write_text(' - :)')
+
+    write_text.write_text(f'It is {define_weather(temperature)} !')
+
+
     # lcd.setRGB(rgb4[0], rgb4[1], rgb4[2])
     time.sleep(2)
-    write_text.write_text(' Bye Bye!')
+    lcd.setCursor(0, 1)
+    write_text.write_text('Have fun')
+    write_text.write_text('  :)')
     # lcd.setRGB(rgb9[0], rgb9[1], rgb9[2])
     write_text.reset_lcd(3)
     time.sleep(2)
