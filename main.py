@@ -41,7 +41,7 @@ def define_weather(temp):
 
 
 file = open("temp.txt", "a")
-number = 22
+number = 1
 lcd.setCursor(0, 0)
 lcd.setColorWhite()
 
