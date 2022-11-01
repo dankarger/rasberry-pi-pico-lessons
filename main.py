@@ -1,65 +1,53 @@
-import RGB1602
+# Example using PIO to drive a set of WS2812 LEDs.
+
+import array
 import time
-import machine
-import utime
-import write_text
+import rp2
+from machine import Pin
 
-led_onboard = machine.Pin(25, machine.Pin.OUT)
-sensor_temp = machine.ADC(4)
-conversion_factor = 3.3 / (65535)
-
-#  ---LCD CONFIG -----
-colorR = 64
-colorG = 128
-colorB = 64
-
-lcd = RGB1602.RGB1602(16, 2)
-
-rgb1 = (148, 0, 110)  # 深紫罗兰色
-rgb2 = (255, 0, 255)  # 紫色
-rgb3 = (144, 249, 15)  # 青白
-rgb4 = (0, 128, 60)  # 浅蓝
-rgb5 = (255, 209, 0)  # 黄色
-rgb6 = (248, 248, 60)  # 幽灵的白色
-rgb7 = (80, 80, 145)  # 深蓝色
-rgb8 = (255, 0, 0)  # 红色
-rgb9 = (0, 255, 0)  # 青色
+# Configure the number of WS2812 LEDs.
+NUM_LEDS = 8
 
 
-#  -----
-tempTable = {
-    10: 'cold',
-    20: 'chill',
-    30: 'hot'
-}
+@rp2.asm_pio(sideset_init=rp2.PIO.OUT_LOW, out_shiftdir=rp2.PIO.SHIFT_LEFT, autopull=True, pull_thresh=24)
+def ws2812():
+    T1 = 2
+    T2 = 5
+    T3 = 3
+    wrap_target()
+    label("bitloop")
+    out(x, 1)               .side(0)    [T3 - 1]
+    jmp(not_x, "do_zero")   .side(1)    [T1 - 1]
+    jmp("bitloop")          .side(1)    [T2 - 1]
+    label("do_zero")
+    nop()                   .side(0)    [T2 - 1]
+    wrap()
 
 
-def define_weather(temp):
-    for number in tempTable:
-        if temp <= number:
-            return tempTable[number]
+# Create the StateMachine with the ws2812 program, outputting on Pin(22).
+sm = rp2.StateMachine(0, ws2812, freq=8_000_000, sideset_base=Pin(0))
 
+# Start the StateMachine, it will wait for data on its FIFO.
+sm.active(1)
 
-file = open("temp.txt", "a")
-number = 1
-lcd.setCursor(0, 0)
-lcd.setColorWhite()
+# Display a pattern on the LEDs via an array of LED RGB values.
+ar = array.array("I", [0 for _ in range(NUM_LEDS)])
 
+# Cycle colours.
+for i in range(4 * NUM_LEDS):
+    for j in range(NUM_LEDS):
+        r = j * 100 // (NUM_LEDS - 1)
+        b = 100 - j * 100 // (NUM_LEDS - 1)
+        if j != i % NUM_LEDS:
+            r >>= 3
+            b >>= 3
+        ar[j] = r << 16 | b
+    sm.put(ar, 8)
+    time.sleep_ms(500)
 
-while True:
-    reading = sensor_temp.read_u16() * conversion_factor
-    temperature = str(27 - (reading - 0.706) / 0.001721)[0:4]
-    lcd.printout(f"The Temp is:")
-    lcd.setCursor(0, 1)
-    lcd.printout(f"- {str(temperature)[0:4]} C -")
-    file.write("hour " + str(number) + ": " + " TEMP-- " + str(temperature) + " c" + "\n")
-    number += 1
-    file.flush()
-    for i in range(1800):
-        reading = sensor_temp.read_u16() * conversion_factor
-        temperature = str(27 - (reading - 0.706) / 0.001721)[0:4]
-        lcd.printout(f"The Temp is:")
-        lcd.setCursor(0, 1)
-        lcd.printout(f"- {str(temperature)[0:4]} C -")
-        led_onboard.toggle()
-        utime.sleep(1)
+# Fade out.
+for i in range(24):
+    for j in range(NUM_LEDS):
+        ar[j] >>= 1
+    sm.put(ar, 8)
+    time.sleep_ms(500)
