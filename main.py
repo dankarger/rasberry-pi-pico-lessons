@@ -52,11 +52,11 @@ def rate_reader():
         # potentiometer.read_u16() > 770
         voltage = potentiometer.read_u16() * conversion_factor
         if voltage < 10:
-            rate = 2000
+            rate = 0
         else:
-            rate = 1000 - math.ceil(voltage)
+            rate =math.ceil(voltage)
         print(math.floor(voltage))
-        utime.sleep(2)
+        utime.sleep(rate)
 
 
 _thread.start_new_thread(rate_reader, ())
