@@ -74,6 +74,7 @@ def pir_handler(pin):
         sm.put(ar, 8)
         time.sleep_ms(rate)
 
+
     # Fade out.
     for i in range(24):
         for j in range(NUM_LEDS):
