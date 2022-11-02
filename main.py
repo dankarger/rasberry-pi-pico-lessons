@@ -16,6 +16,10 @@ potentiometer = machine.ADC(26)
 conversion_factor = 1000 / (65535)
 rate = 1000 - math.floor(potentiometer.read_u16() * conversion_factor)
 
+sensor_pir = machine.Pin(28, machine.Pin.IN)
+led = machine.Pin(15, machine.Pin.OUT)
+buzzer = machine.Pin(14, machine.Pin.OUT)
+
 
 @rp2.asm_pio(sideset_init=rp2.PIO.OUT_LOW, out_shiftdir=rp2.PIO.SHIFT_LEFT, autopull=True, pull_thresh=24)
 def ws2812():
@@ -58,7 +62,7 @@ def rate_reader():
 _thread.start_new_thread(rate_reader, ())
 
 # Cycle colours.
-while True:
+def pir_handler(pin):
     for i in range(4 * NUM_LEDS):
         for j in range(NUM_LEDS):
             r = j * 100 // (NUM_LEDS - 1)
@@ -76,3 +80,6 @@ while True:
             ar[j] >>= 1
         sm.put(ar, 8)
         time.sleep_ms(100)
+
+
+sensor_pir.irq(trigger=machine.Pin.IRQ_RISING, handler=pir_handler)
