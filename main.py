@@ -25,7 +25,7 @@ def define_weather(temp):
 
         if tempTable[result][0] <= temp <= tempTable[result][1]:
             return result
-    # return tempTable['cold']
+
 
 while True:
     lcd.setCursor(0, 0)
