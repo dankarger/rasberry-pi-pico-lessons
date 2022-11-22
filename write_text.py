@@ -5,7 +5,6 @@ lcd = RGB1602.RGB1602(16, 2)
 
 def write_text(text):
     lcd.setCursor(0, 0)
-    # time.sleep(interval)
     for letter in text:
         lcd.printout(letter)
         time.sleep(0.1)
