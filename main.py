@@ -44,7 +44,7 @@ while True:
     write_text.reset_lcd(3)
     lcd.setCursor(0, 0)
 
-    write_text.write_text(f'It is {define_weather(temperature)} weather !')
+    write_text.write_text(f'It is {define_weather(temperature)}  !')
 
     # lcd.setRGB(rgb4[0], rgb4[1], rgb4[2])
     time.sleep(2)
