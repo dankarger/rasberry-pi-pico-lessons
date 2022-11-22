@@ -22,7 +22,6 @@ tempTable = {
 
 def define_weather(temp):
     for result in tempTable:
-
         if tempTable[result][0] <= temp <= tempTable[result][1]:
             return result
 
