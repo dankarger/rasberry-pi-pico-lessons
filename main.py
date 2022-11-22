@@ -21,7 +21,7 @@ tempTable = {
 
 def define_weather(temp):
     for result in tempTable:
-        if temp >= result:
+        if temp <= result:
             return tempTable[result]
 
 
