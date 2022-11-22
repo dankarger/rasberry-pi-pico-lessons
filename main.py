@@ -4,39 +4,28 @@ import machine
 import math
 import write_text
 
+led_onboard = machine.Pin(25, machine.Pin.OUT)
 sensor_temp = machine.ADC(4)
-conversion_factor = 3.3 / (65535)
+conversion_factor = 3.3 / 65535
 
-colorR = 64
-colorG = 128
-colorB = 64
-
+#  ---LCD CONFIG -----
 lcd = RGB1602.RGB1602(16, 2)
 
-rgb1 = (148, 0, 110)  # 深紫罗兰色
-rgb2 = (255, 0, 255)  # 紫色
-rgb3 = (144, 249, 15)  # 青白
-rgb4 = (0, 128, 60)  # 浅蓝
-rgb5 = (255, 209, 0)  # 黄色
-rgb6 = (248, 248, 60)  # 幽灵的白色
-rgb7 = (80, 80, 145)  # 深蓝色
-rgb8 = (255, 0, 0)  # 红色
-rgb9 = (0, 255, 0)  # 青色
-
-# space_invader = [0x4,0xe,0x1f,0x15,0x1f,0xa,0x1b,0x0]
-# lcd.display(0, space_invader)
+#  -------------------
 tempTable = {
-    10: 'cold',
-    20: 'chill',
-    30: 'hot'
+    'very cold': [-10, 10],
+    'cold': [11, 19],
+    'nice': [20, 25],
+    'hot': [25, 40]
 }
 
 
 def define_weather(temp):
-    for number in tempTable:
-        if temp <= number:
-            return tempTable[number]
-
+    for result in tempTable:
+        print('t', result, temp)
+        if tempTable[result][0] <= temp <= tempTable[result][1]:
+            return result
+    # return tempTable['cold']
 
 while True:
     lcd.setCursor(0, 0)
@@ -55,8 +44,7 @@ while True:
     write_text.reset_lcd(3)
     lcd.setCursor(0, 0)
 
-    write_text.write_text(f'It is {define_weather(temperature)} !')
-
+    write_text.write_text(f'It is {define_weather(temperature)} weather !')
 
     # lcd.setRGB(rgb4[0], rgb4[1], rgb4[2])
     time.sleep(2)
